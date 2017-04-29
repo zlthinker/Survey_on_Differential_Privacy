@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{dwork2008differential}
+Cynthia Dwork.
+\newblock Differential privacy: A survey of results.
+\newblock In {\em International Conference on Theory and Applications of Models
+  of Computation}, pages 1--19. Springer, 2008.
+
+\bibitem{dwork2014algorithmic}
+Cynthia Dwork, Aaron Roth, et~al.
+\newblock The algorithmic foundations of differential privacy.
+\newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
+  Science}, 9(3--4):211--407, 2014.
+
+\bibitem{dwork2011differential}
+Cynthia Dwork.
+\newblock Differential privacy.
+\newblock In {\em Encyclopedia of Cryptography and Security}, pages 338--340.
+  Springer, 2011.
+
+\bibitem{dwork2006our}
+Cynthia Dwork, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni
+  Naor.
+\newblock Our data, ourselves: Privacy via distributed noise generation.
+\newblock In {\em Annual International Conference on the Theory and
+  Applications of Cryptographic Techniques}, pages 486--503. Springer, 2006.
+
+\end{thebibliography}

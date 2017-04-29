@@ -1,0 +1,199 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{flushright} % Right align
+{\LARGE\@title} % Increase the font size of the title
+
+\vspace{50pt} % Some vertical space between the title and author name
+
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{40pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Differential Privacy}\\ % Title
+A Survery} % Subtitle
+
+\author{\textsc{20398702 HU, Jiajun \\ ZHOU, Lei} % Author
+\\{\textit{Department of Computer Science \& Engineering \\ The Hong Kong University of Science and Technology}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title section
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT AND KEYWORDS
+%----------------------------------------------------------------------------------------
+
+%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+
+\begin{abstract}
+
+\end{abstract}
+
+\hspace*{3,6mm}\textit{Keywords:} differential privacy % Keywords
+
+\vspace{30pt} % Some vertical space between the abstract and first section
+
+%----------------------------------------------------------------------------------------
+%	ESSAY BODY
+%----------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+
+
+
+
+
+
+%------------------------------------------------
+
+\section{Differentail Privacy}
+
+Over the past ten years, differentail privacy\cite{dwork2008differential, dwork2014algorithmic} has emerged to become one of the most powerful approaches to ensure data pricacy. Roughly speaking, differential privacy ensures that the removal or insertion of a single record does not significantly affect the outcome of any analysis conducted on the database, thus making it possible to prevent private information from exposing to attackers. It follows a rigorous mathematical deduction to prove it can reduce the risk of privacy breach while remaining the utility of the data. At the beginning of this section, we will illuminate the concept by leveraging a simple example. Then, we will give the mathematical definition of differential privay and introduce two privacy mechanisms to achieve it.
+
+\subsection{A Simple Example}
+Suppose you have access to a database that allows you to compute the total income of all resident in certain area. You know one of your friends, Mr. White is going to move to another area, so simply computing the total income of all resident before and after Mr. White's move would allow you to guess his real income. As shown in table \ref{table:1}, the total income of all residents before Mr.White's move is 50 million, while the total income of all residents after Mr.White's move is 49 million. One can compute the real income of Mr.White is 1 millon. So from this example we can see even though we are not allowed to retrieve the information of a particular person, we are still able to get the private informtion through certain opertions. So what could one do to stop this? In the next section, we wil see how differential privacy can help resolve this problem.
+
+
+\begin{table}
+	\begin{tabular}{||c||c||} 
+		\hline
+		Name & Annual Income  \\ [0.5ex] 
+		\hline\hline
+		Mr. Richard & 0.5 million  \\ 
+		\hline
+		Mr. White & 1 million \\
+		\hline
+		Mr. Brown & 2 million \\
+		\hline
+		Ms. Lee & 0.35 million \\
+		\hline
+		Ms. Jean & 0.6 million \\
+		\hline
+		... & ...  \\
+		\hline
+		\multicolumn{2}{||c||}{Total income = 50 million}\\
+		\hline
+	\end{tabular}
+\quad\quad
+\begin{tabular}{||c || c||} 
+	\hline
+	Name & Annual Income  \\ [0.5ex] 
+	\hline\hline
+	Mr. Richard & 0.5 million  \\ 
+	\hline
+      &  \\
+	\hline
+	Mr. Brown & 2 million \\
+	\hline
+	Ms. Lee & 0.35 million \\
+	\hline
+	Ms. Jean & 0.6 million \\
+	\hline
+	... & ...  \\
+	\hline
+	\multicolumn{2}{||c||}{Total income = 49 million}\\
+	\hline
+\end{tabular}
+	\caption{The table before and after Mr. White's move. }
+	\label{table:1}
+\end{table}
+
+\subsection{Definition of Differential Privacy}
+Firstly, let us define some notations.
+\theoremstyle{definition}
+\begin{definition}{}
+ $D$ and $D^\prime$ are databases, but they must differs on at most one row. 
+\end{definition}
+The reason why $D$ and $D^\prime$ is required to differ on one row is to simulate whether a particular record is in or not in the database.
+\begin{definition}{}
+$f(D)$ is a query on D
+\end{definition}
+Refer to the previous example, $f(D)$ is the total income of all residents in the database.
+\begin{definition}{}
+	$M(D)$ is the privacy mechanism, which is a randomized function that takes the database $D$ as inpiut, and release privatized information with respect to $f(D)$.
+\end{definition}
+Refer to the previous example, $M(D)$ is the privated total income obtained by adding random noise on the total income.
+\begin{definition}{$\epsilon$ - differential privacy}
+	A privacy mechanism $M$ gives $\epsilon$ - differential privacy if for all data sets $D$ and $D^\prime$ differing on at most one row, and all $C\in Range(M)$,
+	\[  \frac{Pr[M(D) = C]}{Pr[M(D^\prime) = C]}< e^\epsilon \]
+\end{definition}
+$\epsilon - differential \ privacy$ is a special case of $(\epsilon,\delta) - differential \ privacy$\cite{dwork2011differential,dwork2006our} with $\delta = 0$. Typically, $(\epsilon,\delta) - differential \ privacy$ is simplified to $\epsilon - differential \ privacy$, so we only consider $\epsilon - differential \ privacy$ in this survey. $\epsilon - differential \ privacy$ says that the probability that the privatized result will be $C$ is nearly the same whether or not you are in the database, which means the harm to you is nearly the same regardless of your participation. In the definition, $\epsilon$ is the privacy budget, which is a tradeoff that is used to balance the privacy of the result and it's utility. The smaller the $\epsilon$ is, the closer $Pr[M(D) = C]$ and $Pr[M(D^\prime) = C]$ are, and the stronger protection is. 
+\subsection{Laplace Mechanism}
+
+\subsection{Exponential Mechanism}
+
+
+
+%------------------------------------------------
+
+\section*{Conclusion}
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\bibliographystyle{unsrt}
+
+\bibliography{sample}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
