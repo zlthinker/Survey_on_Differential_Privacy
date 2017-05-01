@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{dwork2008differential}
 Cynthia Dwork.
@@ -12,6 +12,12 @@ Cynthia Dwork, Aaron Roth, et~al.
 \newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
   Science}, 9(3--4):211--407, 2014.
 
+\bibitem{mcsherry2007mechanism}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em Foundations of Computer Science, 2007. FOCS'07. 48th Annual
+  IEEE Symposium on}, pages 94--103. IEEE, 2007.
+
 \bibitem{dwork2011differential}
 Cynthia Dwork.
 \newblock Differential privacy.
@@ -24,5 +30,63 @@ Cynthia Dwork, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni
 \newblock Our data, ourselves: Privacy via distributed noise generation.
 \newblock In {\em Annual International Conference on the Theory and
   Applications of Cryptographic Techniques}, pages 486--503. Springer, 2006.
+
+\bibitem{dwork2006calibrating}
+Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In {\em Theory of Cryptography Conference}, pages 265--284. Springer,
+  2006.
+
+\bibitem{simon1774memoire}
+Laplace~Pierre Simon et~al.
+\newblock M{\'e}moire sur la probabilit{\'e} des causes par les
+  {\'e}v{\`e}nements.
+\newblock {\em M{\'e}moires pr{\'e}sent{\'e}s par divers savants [{\`a}
+  l’Acad{\'e}mie royale des sciences], Paris, Imprimerie royale}, 6:621--656,
+  1774.
+
+\bibitem{gupta2013privately}
+Anupam Gupta, Moritz Hardt, Aaron Roth, and Jonathan Ullman.
+\newblock Privately releasing conjunctions and the statistical query barrier.
+\newblock {\em SIAM Journal on Computing}, 42(4):1494--1520, 2013.
+
+\bibitem{kasiviswanathan2011can}
+Shiva~Prasad Kasiviswanathan, Homin~K Lee, Kobbi Nissim, Sofya Raskhodnikova,
+  and Adam Smith.
+\newblock What can we learn privately?
+\newblock {\em SIAM Journal on Computing}, 40(3):793--826, 2011.
+
+\bibitem{erlingsson2014rappor}
+{\'U}lfar Erlingsson, Vasyl Pihur, and Aleksandra Korolova.
+\newblock Rappor: Randomized aggregatable privacy-preserving ordinal response.
+\newblock In {\em Proceedings of the 2014 ACM SIGSAC conference on computer and
+  communications security}, pages 1054--1067. ACM, 2014.
+
+\bibitem{fanti2016building}
+Giulia Fanti, Vasyl Pihur, and {\'U}lfar Erlingsson.
+\newblock Building a rappor with the unknown: Privacy-preserving learning of
+  associations and data dictionaries.
+\newblock {\em Proceedings on Privacy Enhancing Technologies}, 2016(3):41--61,
+  2016.
+
+\bibitem{bassily2015local}
+Raef Bassily and Adam Smith.
+\newblock Local, private, efficient protocols for succinct histograms.
+\newblock In {\em Proceedings of the Forty-Seventh Annual ACM on Symposium on
+  Theory of Computing}, pages 127--135. ACM, 2015.
+
+\bibitem{qin2016heavy}
+Zhan Qin, Yin Yang, Ting Yu, Issa Khalil, Xiaokui Xiao, and Kui Ren.
+\newblock Heavy hitter estimation over set-valued data with local differential
+  privacy.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 192--203. ACM, 2016.
+
+\bibitem{mcsherry2009privacy}
+Frank~D McSherry.
+\newblock Privacy integrated queries: an extensible platform for
+  privacy-preserving data analysis.
+\newblock In {\em Proceedings of the 2009 ACM SIGMOD International Conference
+  on Management of data}, pages 19--30. ACM, 2009.
 
 \end{thebibliography}

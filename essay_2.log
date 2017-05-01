@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  28 APR 2017 23:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.26)  1 MAY 2017 21:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -256,36 +256,44 @@ Package microtype Info: Loading generic settings for font family
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 158.
  [2]
-(./essay_2.bbl
+Overfull \hbox (11.89651pt too wide) in paragraph at lines 187--189
+\T1/ppl/m/n/10.95 (-20) The math-e-mat-i-cal proof that laplace mech-nism yield
+s a $\OML/zplm/m/it/10.95 ^^O \OMS/zplm/m/n/10.95 ^^@ \OML/zplm/m/it/10.95 diff
+erential privacy$
+ []
+
+[3] [4] [5] (./essay_2.bbl
 LaTeX Font Info:    Try loading font information for OMS+ppl on input line 12.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsppl.fd
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/it' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 12.
-) [3] (./essay_2.aux) ) 
+ [6]) [7]
+(./essay_2.aux) ) 
 Here is how much of TeX's memory you used:
- 3669 strings out of 493014
- 56984 string characters out of 6133351
- 144954 words of memory out of 5000000
- 7049 multiletter control sequences out of 15000+600000
- 39392 words of font info for 127 fonts, out of 8000000 for 9000
+ 3763 strings out of 493014
+ 57883 string characters out of 6133351
+ 144989 words of memory out of 5000000
+ 7059 multiletter control sequences out of 15000+600000
+ 46471 words of font info for 186 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,8n,38p,893b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base
-/8r.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on essay_2.pdf (3 pages, 87790 bytes).
+ 38i,8n,38p,1236b,242s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.en
+c}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on essay_2.pdf (7 pages, 108677 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
- 30 compressed objects within 1 object stream
+ 57 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  31233 words of extra memory for PDF output out of 35830 (max. 10000000)
 
