@@ -20,14 +20,28 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xspace}
+\DeclareRobustCommand{\eg}{e.g.\@\xspace}
+\DeclareRobustCommand{\ie}{i.e.\@\xspace}
+
+\makeatletter
+\DeclareRobustCommand{\etc}{%
+    \@ifnextchar{.}%
+        {etc}%
+        {etc.\@\xspace}%
+}
+\makeatother
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
-\usepackage{amsthm}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
+
+\newtheorem{example}{Example}[section]
 
 \usepackage[protrusion=true,expansion=true]{microtype} % Better typography
 \usepackage{graphicx} % Required for including pictures
@@ -61,7 +75,7 @@
 \title{\textbf{Differential Privacy}\\ % Title
 A Survery} % Subtitle
 
-\author{\textsc{20398702 HU, Jiajun \\ ZHOU, Lei} % Author
+\author{\textsc{20398702 HU, Jiajun \\ 20304086 ZHOU, Lei} % Author
 \\{\textit{Department of Computer Science \& Engineering \\ The Hong Kong University of Science and Technology}}} % Institution
 
 \date{\today} % Date
@@ -175,6 +189,108 @@ $\epsilon - differential \ privacy$ is a special case of $(\epsilon,\delta) - di
 \subsection{Laplace Mechanism}
 
 \subsection{Exponential Mechanism}
+Laplace mechanism is applied to query responses which are appropriately measured on the same scale or in the same units and to which certain magnitude of noise of this scale or units is added. On the contrary, exponential mechanism is first proposed by \cite{mcsherry2007mechanism} for the situations  in which we wish to choose the "best" response. Following the old scheme by adding noise directly to the computed quantity can completely destroy its accuracy. A simple example below explains the necessity of exponential mechanism.
+
+\begin{example}
+Suppose in a supermarket a type of chocolate is on sale. The seller has collected a list of bidders: $A$, $B$, $C$, $D$, where $A$, $B$, $C$ each bid $\$1.0$ and $D$ bids $\$3.1$. He wonders how to set the price of the chocolate to maximize the revenue. At $\$3.1$, the revenue is $\$3.1$, at $\$3.0$ and $\$1.0$ the revenue becomes $\$3.0$, but at $\$3.2$ it turns into $\$0.0$.
+\end{example}
+
+The exponential mechanism offers a safe solution to answering queries with arbitrary utilities. Given a query with arbitrary range $\mathcal{R}$, exponential mechanism is defined by range $\mathcal{R}$, a privacy parameter $\epsilon$ and a quality function $q: \mathbb{N}^{|\mathcal{X}|} \times \mathcal{R} \rightarrow \mathbb{R}$, which maps outputs to quality scores. Getting back to the chocolate example, the quality with respect to the price $r\in \mathcal{R}$ and database $x \in  \mathbb{N}^{|\mathcal{X}|}$ is just the revenue obtained when the price is set to $r$. For a fixed database $x$, the user desires an output that is associated with the maximum quality score. The sensitivity of the quality function, which is a key factor in exponential mechanism, is determined by the database $x$ and the query range $\mathcal{R}$:
+
+\begin{equation}
+\triangle = \max_{r \in \mathcal{R}} \max_{x,y:||x-y||_1 \leq 1} |q(x, r)-q(y,r)|.
+\end{equation}
+
+\begin{definition} 
+Given a database $x$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ , the exponential mechanism $M_E(x, q, \mathcal{R})$ gives the output $r \in \mathcal{R}$ based on the probability:
+$$Pr[M_E(x, q, \mathcal{R}) = r] \propto exp(\frac{\epsilon q(x, r)}{2\triangle}).$$
+\end{definition}
+
+\begin{theorem}
+The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
+\textit{Proof. Given the query range $\mathcal{R}$, the quality function $q$ and two databases $x, y \in \mathbb{N}^{|\mathcal{X}|}$ differing in at most one record (\ie $||x-y||_1 \leq 1$), the ratio of probabilities that exponential mechanism produces the same output on two databases is }
+
+\begin{align}
+\frac{Pr(M_E(x, q, \mathcal{R})=r)}{Pr(M_E(y, q, \mathcal{R})=r)} &= 
+ \frac{
+\left(
+\frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\right)
+}
+{
+\left(
+\frac{exp( \frac{\epsilon q(y,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}
+\right)
+} \\
+&= 
+\left(
+\frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}
+{exp( \frac{\epsilon q(y,r) }{2 \triangle})}
+\right)
+\cdot
+\left(
+\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\right) \\
+& \leq exp \left(
+\frac{\epsilon (q(x, r') - q(y, r') )}{2 \triangle} 
+\right) \\
+& \cdot
+\left(
+\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon (q(x,r')+\triangle) }{2 \triangle})}
+{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\right) \\
+& \leq exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2}) 
+ \\
+&= exp(\epsilon)
+\end{align}
+\end{theorem}
+
+
+The reason why the exponential mechanism can offer strong quality guarantees is that it discount the probability of outcomes exponentially fast as their quality scores drop. Let $OPT_q(x) = \max_{r \in \mathcal{R}} q(x, r)$ denote the maximum quality score in scope $R$ with regard to database $x$. The effectiveness of exponential mechanism can be interpreted that it is very likely to return output $r$ whose quality score $q(x, r)$ is very close to the optimal score $OPT_q(x)$. Mathematical details are demonstrated below.
+
+\begin{theorem}
+A database $x$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ are given. Let $\mathcal{R}_{OPT} =\{r \in \mathcal{R}: q(x, r) = OPT_q(x) \}$ denote the set of elements in $\mathcal{R}$ that assume the maximum score. Then:
+\begin{equation}
+Pr \left[q(M_E(x, q, \mathcal{R}))  
+\leq OPT_q(x) - \frac{2\triangle}{\epsilon} 
+\left(   
+ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
+\right) \right]
+ \leq e^{-t}
+\end{equation}
+\textit{Proof. }
+\begin{align}  \label{eq:proof2}
+Pr[q(M_E(x, q, \mathcal{R})) \leq c] 
+& \leq \frac{
+|\mathcal{R}| exp(\epsilon c / 2 \triangle)
+}{
+|\mathcal{R}_{OPT}| exp(\epsilon OPT_q(x) / 2 \triangle)
+} \\
+&= \frac{|\mathcal{R}| }{ | \mathcal{R}_{OPT} | }
+exp(
+\frac{\epsilon ( c - OPT_q(x)  ) }{2 \triangle}
+)
+\end{align}
+Substitute $c = OPT_q(x) - \frac{2\triangle}{\epsilon} 
+\left(   
+ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
+\right)
+$ into above inequation \ref{eq:proof2}, and then Q.E.D.
+\end{theorem}
+Since we always have $|\mathcal{R}_{OPT}| \geq 1$, the above theorem can be simplified into the following corollary:
+\begin{corollary}
+Given a database $x$ and a quality function $q$ with respect to the $x$ and query range $\mathcal{R}$, we have:
+\begin{equation}
+Pr[q(M_E(x, q, \mathcal{R}))  \geq  
+OPT_q(x) - \frac{2 \triangle}{\epsilon} (ln(| \mathcal{R}|) + t)]
+\geq 1-e^{-t}.
+\end{equation}
+\end{corollary}
+In other words, the exponential mechanism is a differential private mechanism that outputs an element from the range that has quality score that is nearly as high as possible---excepting an additive term which is linear in the sensitivity of the quality score and logarithmic in the cardinality of the query range.
+
+
+
+
 
 
 

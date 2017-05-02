@@ -25,4 +25,10 @@ Cynthia Dwork, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni
 \newblock In {\em Annual International Conference on the Theory and
   Applications of Cryptographic Techniques}, pages 486--503. Springer, 2006.
 
+\bibitem{mcsherry2007mechanism}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em Foundations of Computer Science, 2007. FOCS'07. 48th Annual
+  IEEE Symposium on}, pages 94--103. IEEE, 2007.
+
 \end{thebibliography}
