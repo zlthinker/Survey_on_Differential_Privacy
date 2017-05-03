@@ -31,4 +31,16 @@ Frank McSherry and Kunal Talwar.
 \newblock In {\em Foundations of Computer Science, 2007. FOCS'07. 48th Annual
   IEEE Symposium on}, pages 94--103. IEEE, 2007.
 
+\bibitem{blum2013learning}
+Avrim Blum, Katrina Ligett, and Aaron Roth.
+\newblock A learning theory approach to noninteractive database privacy.
+\newblock {\em Journal of the ACM (JACM)}, 60(2):12, 2013.
+
+\bibitem{dwork2009complexity}
+Cynthia Dwork, Moni Naor, Omer Reingold, Guy~N Rothblum, and Salil Vadhan.
+\newblock On the complexity of differentially private data release: efficient
+  algorithms and hardness results.
+\newblock In {\em Proceedings of the forty-first annual ACM symposium on Theory
+  of computing}, pages 381--390. ACM, 2009.
+
 \end{thebibliography}
