@@ -1,5 +1,29 @@
 \begin{thebibliography}{10}
 
+\bibitem{sweeney2002k}
+Latanya Sweeney.
+\newblock k-anonymity: A model for protecting privacy.
+\newblock {\em International Journal of Uncertainty, Fuzziness and
+  Knowledge-Based Systems}, 10(05):557--570, 2002.
+
+\bibitem{machanavajjhala2007diversity}
+Ashwin Machanavajjhala, Daniel Kifer, Johannes Gehrke, and Muthuramakrishnan
+  Venkitasubramaniam.
+\newblock l-diversity: Privacy beyond k-anonymity.
+\newblock {\em ACM Transactions on Knowledge Discovery from Data (TKDD)},
+  1(1):3, 2007.
+
+\bibitem{li2007t}
+Ninghui Li, Tiancheng Li, and Suresh Venkatasubramanian.
+\newblock t-closeness: Privacy beyond k-anonymity and l-diversity.
+\newblock In {\em Data Engineering, 2007. ICDE 2007. IEEE 23rd International
+  Conference on}, pages 106--115. IEEE, 2007.
+
+\bibitem{ji2014differential}
+Zhanglong Ji, Zachary~C Lipton, and Charles Elkan.
+\newblock Differential privacy and machine learning: a survey and review.
+\newblock {\em arXiv preprint arXiv:1412.7584}, 2014.
+
 \bibitem{dwork2008differential}
 Cynthia Dwork.
 \newblock Differential privacy: A survey of results.
