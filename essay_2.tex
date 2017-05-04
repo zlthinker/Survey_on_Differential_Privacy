@@ -67,6 +67,7 @@
 \end{flushright}
 }
 
+\begin{document}
 %----------------------------------------------------------------------------------------
 %	TITLE
 %----------------------------------------------------------------------------------------
@@ -81,7 +82,6 @@ A Survery} % Subtitle
 
 %----------------------------------------------------------------------------------------
 
-\begin{document}
 
 \maketitle % Print the title section
 
@@ -104,11 +104,13 @@ A Survery} % Subtitle
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
+With the fast development of web techologies, the number of interent users are growing exponentially. In order to provide better services, many service providers, such as government, company, and research institutes, collect personal information and analyze them. Social networks such as Facebook and LinkedIn use friendship to recommend new friends to you. Youtube \& Amazon use viewing/buying records also for recommendations. Emails in Gmail are used for targeted Ads. We are enjoying the big convenience and effecience brought by these technologies, however, we are still under the risk of personal information leakage. Trouble will be made if attackers exploit the leaked information and make use of them.
 
+To address this issue, a common practice is to anonymize certain data in the database. On could remove or hash the identifiable information, such as name and identity number, in the database. HIPAA \footnote{https://en.wikipedia.org/wiki/Health\textunderscore Insurance\textunderscore Portability \textunderscore and\textunderscore Accountability\textunderscore Act}  (Health Insurance Portability and Accountability Act) has promoted this approach and list 18 categories of identifiable information which can be anonymized. However, anonymizing data is insufficient especially when the attacker has already known some background knowledge about the individuals in the database. To combat this issue, some advanced technologies, such as k-anonymity\cite{sweeney2002k}, l-diversity\cite{machanavajjhala2007diversity} and t-closeness\cite{li2007t}, have been proposed. But it turns out even these techologies cannot prevent background attacks especially when the attacker already know something about the contents in the database\cite{ji2014differential}.
 
+In this survey, we present differential privacy\cite{dwork2008differential, dwork2014algorithmic} . Differential privacy is a powerful approach to privatize the released information from database. Even in the WWDC 2016\footnote{https://developer.apple.com/videos/wwdc2016}, Apple announced a series of new security and privacy features, including one feature that is differential privacy, with the aim to improve the privacy of their data collection practices\footnote{https://www.wired.com/2016/06/apples-differential-privacy-collecting-data/}. Roughly speaking, differential privacy ensures that the removal or insertion of a single record does not significantly affect the outcome of any analysis made on the database, thus making it possible to prevent attackers from gussing the real contents of the database. It follows a rigorous mathematical deduction to prove it can reduce the risk of privacy breach while remaining the utility of the data.
 
-
-
+In the rest of the survey, we provide the definition of differential privacy and two mechanisms, Laplace Mechanism and Exponential Mechanism, that can achieve it (Section 2). Then, we discuss a special case of differential privacy, local differential privacy (LDP), and list four typical LDP solutions (Section 3). Finally, we conclude the survey in the last section.
 
 
 %------------------------------------------------
@@ -122,11 +124,11 @@ Suppose you have access to a database that allows you to compute the total incom
 
 
 \begin{table}
-	\begin{tabular}{||c||c||} 
+	\begin{tabular}{||c||c||}
 		\hline
-		Name & Annual Income  \\ [0.5ex] 
+		Name & Annual Income  \\ [0.5ex]
 		\hline\hline
-		Mr. Richard & 0.5 million  \\ 
+		Mr. Richard & 0.5 million  \\
 		\hline
 		Mr. White & 1 million \\
 		\hline
@@ -142,11 +144,11 @@ Suppose you have access to a database that allows you to compute the total incom
 		\hline
 	\end{tabular}
 \quad\quad
-\begin{tabular}{||c || c||} 
+\begin{tabular}{||c || c||}
 	\hline
-	Name & Annual Income  \\ [0.5ex] 
+	Name & Annual Income  \\ [0.5ex]
 	\hline\hline
-	Mr. Richard & 0.5 million  \\ 
+	Mr. Richard & 0.5 million  \\
 	\hline
       &  \\
 	\hline
@@ -169,7 +171,7 @@ Suppose you have access to a database that allows you to compute the total incom
 Firstly, let us define some notations.
 \theoremstyle{definition}
 \begin{definition}{}
- $D$ and $D^\prime$ are databases, but they must differs on at most one row. 
+ $D$ and $D^\prime$ are databases, but they must differs on at most one row.
 \end{definition}
 The reason why $D$ and $D^\prime$ is required to differ on one row is to simulate whether a particular record is in or not in the database.
 \begin{definition}{}
@@ -179,14 +181,30 @@ Refer to the previous example, $f(D)$ is the total income of all residents in th
 \begin{definition}{}
 	$M(D)$ is the privacy mechanism, which is a randomized function that takes the database $D$ as inpiut, and release privatized information with respect to $f(D)$.
 \end{definition}
-Refer to the previous example, $M(D)$ is the privated total income obtained by adding random noise on the total income.
+Designing privacy mechanism is a topic on its own\cite{mcsherry2007mechanism}. In this survery, we only consider Laplace Mechanism and Exponential Mechanism. Refer to the previous example, $M(D)$ is the privated total income obtained by adding random noise on the total income.
 \begin{definition}{$\epsilon$ - differential privacy}
 	A privacy mechanism $M$ gives $\epsilon$ - differential privacy if for all data sets $D$ and $D^\prime$ differing on at most one row, and all $C\in Range(M)$,
 	\[  \frac{Pr[M(D) = C]}{Pr[M(D^\prime) = C]}< e^\epsilon \]
 \end{definition}
-$\epsilon - differential \ privacy$ is a special case of $(\epsilon,\delta) - differential \ privacy$\cite{dwork2011differential,dwork2006our} with $\delta = 0$. Typically, $(\epsilon,\delta) - differential \ privacy$ is simplified to $\epsilon - differential \ privacy$, so we only consider $\epsilon - differential \ privacy$ in this survey. $\epsilon - differential \ privacy$ says that the probability that the privatized result will be $C$ is nearly the same whether or not you are in the database, which means the harm to you is nearly the same regardless of your participation. In the definition, $\epsilon$ is the privacy budget, which is a tradeoff that is used to balance the privacy of the result and it's utility. The smaller the $\epsilon$ is, the closer $Pr[M(D) = C]$ and $Pr[M(D^\prime) = C]$ are, and the stronger protection is. 
-\subsection{Laplace Mechanism}
+$\epsilon - differential \ privacy$ is a special case of $(\epsilon,\delta) - differential \ privacy$\cite{dwork2011differential,dwork2006our} with $\delta = 0$. Typically, $(\epsilon,\delta) - differential \ privacy$ is simplified to $\epsilon - differential \ privacy$, so we only consider $\epsilon - differential \ privacy$ in this survey. $\epsilon - differential \ privacy$ says that the probability that the privatized result will be $C$ is nearly the same whether or not you are in the database, which means an adversary cannot infer with high confidence (controlled by $\epsilon$) whether the input database is $D$ or $D^\prime$. In the definition, $\epsilon$ is the privacy budget, which is a tradeoff that is used to balance the privacy of the result and it's utility. The smaller the $\epsilon$ is, the closer $Pr[M(D) = C]$ and $Pr[M(D^\prime) = C]$ are, and the stronger protection is.
 
+\subsection{Laplace Mechanism}
+In this section, we will introduction one of the most popular privacy mechanisms - Laplace Mechanism\cite{dwork2006calibrating}. Laplace mechanism works particularly well when the query $f(D)\in R^n$ is a funtion mapping databases to (vectors of) real numbers. For example, when the query is a counting query, $f(D)$ is the number of records in the database.
+\begin{definition}{Sensitivity of a Function}
+For $f: D\rightarrow R^n$, the sensitivity of $f$ is
+	\[  \bigtriangleup f = max_{D, D\prime} ||f(D) - f(D\prime)||_n \]
+	for all $D, D\prime$ differs on at most one row.
+\end{definition}
+Intutively, $\bigtriangleup f$ captures how much one person's data can affect the ouput. Taking the counting query as an example, $\bigtriangleup f = 1$ because adding or deleting a row of the database will only affect the number of records by 1.
+
+For simplicity, we only consider the case when $n=1$. Laplace Mechanism $M(D)$ privatizes the result by adding a 0-centered symmetric random noise, which is drawn from Laplace Distribution\cite{simon1774memoire} with parameter $\bigtriangleup f / \epsilon$,  on the true answer $f(D)$. So the probability density function of the random noise $x$ is
+   \[ Pr[x] = \frac{\epsilon}{2\bigtriangleup f}e^{-\frac{|x|\epsilon}{\bigtriangleup f}}  \]
+The probability density function of $M(D)$ is
+  \[ Pr[M(D)] = Pr[x+f(D)] = \frac{\epsilon}{2\bigtriangleup f}e^{-\frac{|x-f(D)|\epsilon}{\bigtriangleup f}}  \]
+  The mathematical proof that laplace mechnism yields a $\epsilon - differential \ privacy$ is straightforward.
+  \[ \frac{Pr[M(D) = C]}{Pr[M(D\prime = C)]} = \frac{\frac{\epsilon}{2\bigtriangleup f}e^{-\frac{|x-f(D)|\epsilon}{\bigtriangleup f}} }{\frac{\epsilon}{2\bigtriangleup f}e^{-\frac{|x-f(D\prime)|\epsilon}{\bigtriangleup f}} } = \frac{e^{-\frac{|x-f(D)|\epsilon}{\bigtriangleup f}} }{e^{-\frac{|x-f(D\prime)|\epsilon}{\bigtriangleup f}} } \] \[= e^{-\frac{|x-f(D)|\epsilon}{\bigtriangleup f} + \frac{|x-f(D\prime)|\epsilon}{\bigtriangleup f} } = e^{\frac{|f(D) - f(D\prime)|\epsilon}{\bigtriangleup f}} \leq e^\epsilon \]
+
+So it concludes that laplace mechanism yields $\epsilon - differential \ privacy$
 
 \subsection{Exponential Mechanism}
 Laplace mechanism is applied to query responses which are appropriately measured on the same scale or in the same units and to which certain magnitude of noise of this scale or units is added. On the contrary, exponential mechanism is first proposed by \cite{mcsherry2007mechanism} for the situations  in which we wish to choose the "best" response. Following the old scheme by adding noise directly to the computed quantity would completely destroy its accuracy. A simple example took by \cite{dwork2014algorithmic} explains the failure of simply adding noise:
@@ -201,7 +219,7 @@ The exponential mechanism offers a safe solution to answering queries with arbit
 \triangle = \max_{r \in \mathcal{R}} \max_{x,y:||x-y||_1 \leq 1} |q(x, r)-q(y,r)|.
 \end{equation}
 
-\begin{definition} 
+\begin{definition}
 Given a database $x \in  \mathcal{X}^n$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ , the exponential mechanism $M_E(x, q, \mathcal{R})$ gives the output $r \in \mathcal{R}$ based on the probability:
 $$Pr[M_E(x, q, \mathcal{R}) = r] \propto exp(\frac{\epsilon q(x, r)}{2\triangle}).$$
 \end{definition}
@@ -211,7 +229,7 @@ The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
 \textit{Proof. Given the query range $\mathcal{R}$, the quality function $q$ and two databases $x, y \in \mathbb{N}^{|\mathcal{X}|}$ differing in at most one record (\ie $||x-y||_1 \leq 1$), the ratio of probabilities that exponential mechanism produces the same output on two databases is }
 
 \begin{align}
-\frac{Pr(M_E(x, q, \mathcal{R})=r)}{Pr(M_E(y, q, \mathcal{R})=r)} &= 
+\frac{Pr(M_E(x, q, \mathcal{R})=r)}{Pr(M_E(y, q, \mathcal{R})=r)} &=
  \frac{
 \left(
 \frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
@@ -222,7 +240,7 @@ The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
 \frac{exp( \frac{\epsilon q(y,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}
 \right)
 } \\
-&= 
+&=
 \left(
 \frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}
 {exp( \frac{\epsilon q(y,r) }{2 \triangle})}
@@ -232,14 +250,14 @@ The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
 \frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
 \right) \\
 & \leq exp \left(
-\frac{\epsilon (q(x, r') - q(y, r') )}{2 \triangle} 
+\frac{\epsilon (q(x, r') - q(y, r') )}{2 \triangle}
 \right) \\
 & \cdot
 \left(
 \frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon (q(x,r')+\triangle) }{2 \triangle})}
 {\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
 \right) \\
-& \leq exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2}) 
+& \leq exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2})
  \\
 &= exp(\epsilon)
 \end{align}
@@ -251,16 +269,16 @@ The reason why the exponential mechanism can offer strong quality guarantees is 
 \begin{theorem}
 A database $x$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ are given. Let $\mathcal{R}_{OPT} =\{r \in \mathcal{R}: q(x, r) = OPT_q(x) \}$ denote the set of elements in $\mathcal{R}$ that assume the maximum score. Then:
 \begin{equation}
-Pr \left[q(M_E(x, q, \mathcal{R}))  
-\leq OPT_q(x) - \frac{2\triangle}{\epsilon} 
-\left(   
+Pr \left[q(M_E(x, q, \mathcal{R}))
+\leq OPT_q(x) - \frac{2\triangle}{\epsilon}
+\left(
 ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
 \right) \right]
  \leq e^{-t}
 \end{equation}
 \textit{Proof. }
 \begin{align}  \label{eq:proof2}
-Pr[q(M_E(x, q, \mathcal{R})) \leq c] 
+Pr[q(M_E(x, q, \mathcal{R})) \leq c]
 & \leq \frac{
 |\mathcal{R}| exp(\epsilon c / 2 \triangle)
 }{
@@ -271,8 +289,8 @@ exp(
 \frac{\epsilon ( c - OPT_q(x)  ) }{2 \triangle}
 )
 \end{align}
-Substitute $c = OPT_q(x) - \frac{2\triangle}{\epsilon} 
-\left(   
+Substitute $c = OPT_q(x) - \frac{2\triangle}{\epsilon}
+\left(
 ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
 \right)
 $ into above inequation \ref{eq:proof2}, and then Q.E.D.
@@ -281,7 +299,7 @@ Since we always have $|\mathcal{R}_{OPT}| \geq 1$, the above theorem can be simp
 \begin{corollary}
 Given a database $x$ and a quality function $q$ with respect to the $x$ and query range $\mathcal{R}$, we have:
 \begin{equation}
-Pr[q(M_E(x, q, \mathcal{R}))  \geq  
+Pr[q(M_E(x, q, \mathcal{R}))  \geq
 OPT_q(x) - \frac{2 \triangle}{\epsilon} (ln(| \mathcal{R}|) + t)]
 \geq 1-e^{-t}.
 \end{equation}
@@ -298,7 +316,7 @@ We start with the observation that for every database $D$ and query set $Q$, the
 \textit{
 For every $D \in \mathcal{X}^n$ and every set of counting queries $Q$, there exists a synthetic database $\hat{D} \in \mathcal{X}^m$, for $m \in \frac{8logk}{\alpha^2}$, such that
 $$ max_{i \in [k]} | q_i(D) - q_i(\hat{D}) | \leq \alpha. $$
-Proof. Consider a database $\hat{D}\in \mathcal{X}^m$ formed by taking $m < n$ random samples from $D \in \mathcal{X}^n$. Then by a union bound and a Chernoff bound 
+Proof. Consider a database $\hat{D}\in \mathcal{X}^m$ formed by taking $m < n$ random samples from $D \in \mathcal{X}^n$. Then by a union bound and a Chernoff bound
 \begin{align}
 Pr\left[ max_{q_i \in Q} | q_i(D) - q_i(\hat{D})   | > \alpha \right]
 &\leq  k \cdot Pr \left[ | q_1(D) - q_1(\hat{D})   |  > \alpha  \right] \\
@@ -310,7 +328,7 @@ Pr\left[ max_{q_i \in Q} | q_i(D) - q_i(\hat{D})   | > \alpha \right]
 It suggests that there must exists some $\hat{D} \in \mathcal{X}^m$ that preserves the answers to every query $q \in Q$ up to an additive error term of $\alpha$.
 \end{theorem}
 
-The above theorem has kindled interest in synthetic databases \cite{blum2013learning, dwork2009complexity}. But how to construct the differentially private synthetic databases efficiently? The BLR mechanism \cite{blum2013learning} presents a classical paradigm that instantiates the exponential mechanism to build up the synthetic database: 
+The above theorem has kindled interest in synthetic databases \cite{blum2013learning, dwork2009complexity}. But how to construct the differentially private synthetic databases efficiently? The BLR mechanism \cite{blum2013learning} presents a classical paradigm that instantiates the exponential mechanism to build up the synthetic database:
 \begin{itemize}
 \item Let $\mathcal{R} = \mathcal{X}^m$ for $m = \frac{32logk}{\alpha^2},$
 \item Let the quality function $q(D, \hat{D}) = -max_{f\in Q} | f(D) - f(\hat{D}) |$ for every $D \in \mathcal{X}^n$ and $\hat{D} \in \mathcal{X}^m$. Note that we make the quality function inversely related to the error so that better accuracy implies higher score.
@@ -323,8 +341,23 @@ The above theorem has kindled interest in synthetic databases \cite{blum2013lear
 
 
 
+\section{Local Differential Privacy}
+In traditional differential privacy\cite{dwork2008differential}, all sensitive information from a large number of respondents are gathered by a trusted and trustworthy curator, who further releases the statistical information of the underlying population to the public. The reponsibiliy to privatize information lies on the curator side. However, in Local Differential Privacy (LDP)\cite{gupta2013privately,kasiviswanathan2011can}, every respondent take the responsibility to privatize his or her data locally before sending to the curator. So in this setting, the curator will never have the access to the exact value of sensitive information, which protects not only the privacy of data contributors but also the curator itself against the potential risk of information leakage. The goal of LDP is two fold: (1) $\epsilon - differential \ privacy$ must be satisfied on each user side. (2) the curator should be able to compute accurate statistics from the noisy data received from the user side. It turns out that traditional differential privacy mechanisms are not adequate enough to address the LDP problems. In the following, we overview several typical LDP solutions.
+\subsection{Randomized Response}
+Rendomized Response (RR)\cite{erlingsson2014rappor} asks each user with a sensitive question whose answer must be "yes" or "no". For example, "do you like Donald Trump?". The user flips a coin to decide which answer to give. The user gives his true answer when the coin turns head, and gives the opposite answer when the coin turns tail. However, in RR, instead of using a fair coin, we use a biased coin. It turns head with probability $p$, and turns tail with probability $1-p$. It turns out that $\epsilon - differential \ privacy$ can be satisfied with the following value of p:
+\[ p = \frac{e^\epsilon}{1+e^\epsilon} \]
+The goal of the curator is to give the estimated percentage of "yes" given the noisy answers. Suppose the percentage of "yes" given the noisy answer is $c$, the corrected version of the result $c^\prime$ is:
+\[ c^\prime = c \times c_{e}, where \ c_{e} = \frac{1}{1-2p}\]
+The limitation of RR is that it can only be applied to the problem with binary answer.
+\subsection{RAPPOR}
+RAPPOR\cite{erlingsson2014rappor,fanti2016building} extends RR\cite{erlingsson2014rappor} to more complex data types. Suppose there are $n$ users and $d$ items, each user can own exactly one item. To be more specific, let us define $u_i$, where $i=1 \ to \ n$, as the $i_{th}$ user. $v_i$, where $i=1 \ to \ n$, is a vector with length $d$ of $u_i$. All the coordinates of $v_i$ are 0 except the $j_{th}$ coordinate, which is 1, if $u_i$ owns item $j$. The goal of the corator is the same as in RR, which is to compute the frequency of each item. User $u_i$ applies RR independently on each coordinate of $v_i$ with a biased coin with probability $p$ (the sensitivity of any query function $f$ is 2 because any vector contains a single coordinate of 1, hence the maximum difference between $f(D)$ and $f(D^\prime)$ is 2):
+\[ p = \frac{e^{\frac{\epsilon}{2}}}{1+e^{\frac{\epsilon}{2}}} \]
+The limitation of RAPPOR is that it can cause huge communication overhead because each user has to send a vector with lengh $d$, which can be extremly large in some cases (e.g. the number of email accounts of all users).
 
-
+\subsection{Succinct histogram}
+Succinct histogram (SH)\cite{bassily2015local} addresses the communication overhead led by RAPPOR\cite{erlingsson2014rappor,fanti2016building}. Basically, the problem setting of SH remains the same with RAPPOR, i.e. each user $u_i$ owns a vector $v_i$ of length $d$, with only one coordinate to be 1 and all the others to be 0. The goal of the curator is also to estimate the frequency of each item. The main idea behind SH is instead of sending $d$ coordinates every time, every user only randomly pick one coordinate and report it to the curator. In this way, the communication overhead drops from $O(d)$ to $O(1)$.
+\subsection{LDPMiner}
+The above mentioned solutions pose too much limitations on the data types. In order to cope with complex data types, Zhan et al. proposed LDPMiner\cite{qin2016heavy} to address the heavy hitters over set-valued data. Suppose there are $n$ users and $d$ items, and each user can own exactly $l$ items. If the number of the items a user owns is smaller than $l$, some dummy items are added to fill the set. If the number of the items a user owns is greater than $l$, $l$ randomly picked items are considered in the set. The frequency of the item is the portion of users owning this item. The general goal of the curator is to find the top-k most frequent items with the highest frequency. LDPMiner proposes a two-phase solution. The main idea is to firstly filter the items and select $O(k)$ candidate heavy hitters in the first phase, and then focuses on refining the frequecy estimates of these candidates in the second phase. LDPMiner splits the total privay budget $\epsilon$ as $\epsilon_1$ and $\epsilon_2$, which is assigned to phase one and phase two respectively. According to sequential composability\cite{mcsherry2009privacy}, the whole process satisfies $\epsilon - differential \ privacy$.
 %------------------------------------------------
 
 \section*{Conclusion}
