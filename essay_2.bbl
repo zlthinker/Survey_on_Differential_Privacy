@@ -1,4 +1,28 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{sweeney2002k}
+Latanya Sweeney.
+\newblock k-anonymity: A model for protecting privacy.
+\newblock {\em International Journal of Uncertainty, Fuzziness and
+  Knowledge-Based Systems}, 10(05):557--570, 2002.
+
+\bibitem{machanavajjhala2007diversity}
+Ashwin Machanavajjhala, Daniel Kifer, Johannes Gehrke, and Muthuramakrishnan
+  Venkitasubramaniam.
+\newblock l-diversity: Privacy beyond k-anonymity.
+\newblock {\em ACM Transactions on Knowledge Discovery from Data (TKDD)},
+  1(1):3, 2007.
+
+\bibitem{li2007t}
+Ninghui Li, Tiancheng Li, and Suresh Venkatasubramanian.
+\newblock t-closeness: Privacy beyond k-anonymity and l-diversity.
+\newblock In {\em Data Engineering, 2007. ICDE 2007. IEEE 23rd International
+  Conference on}, pages 106--115. IEEE, 2007.
+
+\bibitem{ji2014differential}
+Zhanglong Ji, Zachary~C Lipton, and Charles Elkan.
+\newblock Differential privacy and machine learning: a survey and review.
+\newblock {\em arXiv preprint arXiv:1412.7584}, 2014.
 
 \bibitem{dwork2008differential}
 Cynthia Dwork.
@@ -11,6 +35,12 @@ Cynthia Dwork, Aaron Roth, et~al.
 \newblock The algorithmic foundations of differential privacy.
 \newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
   Science}, 9(3--4):211--407, 2014.
+
+\bibitem{mcsherry2007mechanism}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em Foundations of Computer Science, 2007. FOCS'07. 48th Annual
+  IEEE Symposium on}, pages 94--103. IEEE, 2007.
 
 \bibitem{dwork2011differential}
 Cynthia Dwork.
@@ -25,6 +55,7 @@ Cynthia Dwork, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni
 \newblock In {\em Annual International Conference on the Theory and
   Applications of Cryptographic Techniques}, pages 486--503. Springer, 2006.
 
+<<<<<<< HEAD
 \bibitem{mcsherry2007mechanism}
 Frank McSherry and Kunal Talwar.
 \newblock Mechanism design via differential privacy.
@@ -42,5 +73,64 @@ Cynthia Dwork, Moni Naor, Omer Reingold, Guy~N Rothblum, and Salil Vadhan.
   algorithms and hardness results.
 \newblock In {\em Proceedings of the forty-first annual ACM symposium on Theory
   of computing}, pages 381--390. ACM, 2009.
+=======
+\bibitem{dwork2006calibrating}
+Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In {\em Theory of Cryptography Conference}, pages 265--284. Springer,
+  2006.
+
+\bibitem{simon1774memoire}
+Laplace~Pierre Simon et~al.
+\newblock M{\'e}moire sur la probabilit{\'e} des causes par les
+  {\'e}v{\`e}nements.
+\newblock {\em M{\'e}moires pr{\'e}sent{\'e}s par divers savants [{\`a}
+  l’Acad{\'e}mie royale des sciences], Paris, Imprimerie royale}, 6:621--656,
+  1774.
+
+\bibitem{gupta2013privately}
+Anupam Gupta, Moritz Hardt, Aaron Roth, and Jonathan Ullman.
+\newblock Privately releasing conjunctions and the statistical query barrier.
+\newblock {\em SIAM Journal on Computing}, 42(4):1494--1520, 2013.
+
+\bibitem{kasiviswanathan2011can}
+Shiva~Prasad Kasiviswanathan, Homin~K Lee, Kobbi Nissim, Sofya Raskhodnikova,
+  and Adam Smith.
+\newblock What can we learn privately?
+\newblock {\em SIAM Journal on Computing}, 40(3):793--826, 2011.
+
+\bibitem{erlingsson2014rappor}
+{\'U}lfar Erlingsson, Vasyl Pihur, and Aleksandra Korolova.
+\newblock Rappor: Randomized aggregatable privacy-preserving ordinal response.
+\newblock In {\em Proceedings of the 2014 ACM SIGSAC conference on computer and
+  communications security}, pages 1054--1067. ACM, 2014.
+
+\bibitem{fanti2016building}
+Giulia Fanti, Vasyl Pihur, and {\'U}lfar Erlingsson.
+\newblock Building a rappor with the unknown: Privacy-preserving learning of
+  associations and data dictionaries.
+\newblock {\em Proceedings on Privacy Enhancing Technologies}, 2016(3):41--61,
+  2016.
+
+\bibitem{bassily2015local}
+Raef Bassily and Adam Smith.
+\newblock Local, private, efficient protocols for succinct histograms.
+\newblock In {\em Proceedings of the Forty-Seventh Annual ACM on Symposium on
+  Theory of Computing}, pages 127--135. ACM, 2015.
+
+\bibitem{qin2016heavy}
+Zhan Qin, Yin Yang, Ting Yu, Issa Khalil, Xiaokui Xiao, and Kui Ren.
+\newblock Heavy hitter estimation over set-valued data with local differential
+  privacy.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 192--203. ACM, 2016.
+
+\bibitem{mcsherry2009privacy}
+Frank~D McSherry.
+\newblock Privacy integrated queries: an extensible platform for
+  privacy-preserving data analysis.
+\newblock In {\em Proceedings of the 2009 ACM SIGMOD International Conference
+  on Management of data}, pages 19--30. ACM, 2009.
+>>>>>>> 11833b4a856fe006d7d1990ab6bb87faca859510
 
 \end{thebibliography}
