@@ -207,55 +207,55 @@ The probability density function of $M(D)$ is
 So it concludes that laplace mechanism yields $\epsilon - differential \ privacy$
 
 \subsection{Exponential Mechanism}
-Laplace mechanism is applied to query responses which are appropriately measured on the same scale or in the same units and to which certain magnitude of noise of this scale or units is added. On the contrary, exponential mechanism is first proposed by \cite{mcsherry2007mechanism} for the situations  in which we wish to choose the "best" response. Following the old scheme by adding noise directly to the computed quantity would completely destroy its accuracy. A simple example took by \cite{dwork2014algorithmic} explains the failure of simply adding noise:
+Laplace mechanism is applied to query responses which are appropriately measured on the same scale or in the same units and to which certain magnitude of noise of this scale or units is added. On the contrary, exponential mechanism is first proposed by McSherry \etal \cite{mcsherry2007mechanism} for the situations  in which we wish to choose the "best" response. Following the old scheme by adding noise directly to the computed quantity would completely destroy its accuracy. A simple example took by \cite{dwork2014algorithmic} explains the failure of simply adding noise:
 
 \begin{example}
-Suppose in a supermarket a type of chocolate is on sale. The seller has collected a list of bidders: $A$, $B$, $C$, $D$, where $A$, $B$, $C$ each bid $\$1.0$ and $D$ bids $\$3.1$. He wonders how to set the price of the chocolate to maximize the revenue. At $\$3.1$, the revenue is $\$3.1$, at $\$3.0$ and $\$1.0$ the revenue becomes $\$3.0$, but at $\$3.2$ it turns into $\$0.0$.
+Suppose in a supermarket a type of chocolate is on sale. The seller has collected a list of bidders: $a$, $b$, $c$, $d$, where $a$, $b$, $c$ each bid $\$1.0$ and $d$ bids $\$3.1$. He wonders how to set the price of the chocolate to maximize the revenue. At $\$3.1$, the revenue is $\$3.1$, at $\$3.0$ and $\$1.0$ the revenue becomes $\$3.0$, but at $\$3.2$ it turns into $\$0.0$.
 \end{example}
 
-The exponential mechanism offers a safe solution to answering queries with arbitrary utilities. Given a query with arbitrary range $\mathcal{R}$, exponential mechanism is defined by range $\mathcal{R}$, the privacy parameter $\epsilon$ and a quality function $q:\mathcal{X}^n \times \mathcal{R} \rightarrow \mathbb{R}$, which maps outputs to quality scores. Getting back to the chocolate example, the quality with respect to the price $r\in \mathcal{R}$ and database $x \in  \mathcal{X}^n $ is just the revenue obtained when the price is set to $r$. For a fixed database $x$, the user desires an output that is associated with the maximum quality score. The sensitivity of the quality function, which is a key factor in exponential mechanism, is determined by the database $x$ and the query range $\mathcal{R}$:
+The exponential mechanism offers a safe solution to answering queries with arbitrary utilities. Given a query with arbitrary range $\mathcal{R}$, exponential mechanism is defined by range $\mathcal{R}$, the privacy parameter $\epsilon$ and a quality function $q:\mathcal{X}^n \times \mathcal{R} \rightarrow \mathbb{R}$, which maps outputs to quality scores. Getting back to the chocolate example, the quality with respect to the price $r\in \mathcal{R}$ and database $D \in  \mathcal{X}^n $ is just the revenue obtained when the price is set to $r$. For a fixed database $D$, the user desires an output that is associated with the maximum quality score. The sensitivity of the quality function, which is a key factor in exponential mechanism, is determined by the database $D$ and the query range $\mathcal{R}$:
 
 \begin{equation}
-\triangle = \max_{r \in \mathcal{R}} \max_{x,y:||x-y||_1 \leq 1} |q(x, r)-q(y,r)|.
+\triangle = \max_{r \in \mathcal{R}} \max_{D,D':||D-D'||_1 \leq 1} |q(D, r)-q(D',r)|.
 \end{equation}
 
 \begin{definition}
-Given a database $x \in  \mathcal{X}^n$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ , the exponential mechanism $M_E(x, q, \mathcal{R})$ gives the output $r \in \mathcal{R}$ based on the probability:
-$$Pr[M_E(x, q, \mathcal{R}) = r] \propto exp(\frac{\epsilon q(x, r)}{2\triangle}).$$
+Given a database $D \in  \mathcal{X}^n$ and a quality function $q$ with respect to $D$ and query range $\mathcal{R}$ , the exponential mechanism $M_E(D, q, \mathcal{R})$ gives the output $r \in \mathcal{R}$ based on the probability:
+$$Pr[M_E(D, q, \mathcal{R}) = r] \propto exp(\frac{\epsilon q(D, r)}{2\triangle}).$$
 \end{definition}
 
 \begin{theorem}
 The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
-\textit{Proof. Given the query range $\mathcal{R}$, the quality function $q$ and two databases $x, y \in \mathbb{N}^{|\mathcal{X}|}$ differing in at most one record (\ie $||x-y||_1 \leq 1$), the ratio of probabilities that exponential mechanism produces the same output on two databases is }
+\textit{Proof. Given the query range $\mathcal{R}$, the quality function $q$ and two databases $D, D'$ differing in at most one record (\ie $||D-D'||_1 \leq 1$), the ratio of probabilities that exponential mechanism produces the same output on two databases is }
 
 \begin{align}
-\frac{Pr(M_E(x, q, \mathcal{R})=r)}{Pr(M_E(y, q, \mathcal{R})=r)} &=
+\frac{Pr(M_E(D, q, \mathcal{R})=r)}{Pr(M_E(D', q, \mathcal{R})=r)} &=
  \frac{
 \left(
-\frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\frac{exp( \frac{\epsilon q(D,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(D,r') }{2 \triangle})}
 \right)
 }
 {
 \left(
-\frac{exp( \frac{\epsilon q(y,r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}
+\frac{exp( \frac{\epsilon q(D',r) }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(D',r') }{2 \triangle})}
 \right)
 } \\
 &=
 \left(
-\frac{exp( \frac{\epsilon q(x,r) }{2 \triangle})}
-{exp( \frac{\epsilon q(y,r) }{2 \triangle})}
+\frac{exp( \frac{\epsilon q(D,r) }{2 \triangle})}
+{exp( \frac{\epsilon q(D',r) }{2 \triangle})}
 \right)
 \cdot
 \left(
-\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(y,r') }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(D',r') }{2 \triangle})}{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(D,r') }{2 \triangle})}
 \right) \\
 & \leq exp \left(
-\frac{\epsilon (q(x, r') - q(y, r') )}{2 \triangle}
+\frac{\epsilon (q(D, r') - q(D', r') )}{2 \triangle}
 \right) \\
 & \cdot
 \left(
-\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon (q(x,r')+\triangle) }{2 \triangle})}
-{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(x,r') }{2 \triangle})}
+\frac{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon (q(D,r')+\triangle) }{2 \triangle})}
+{\sum_{r' \in \mathcal{R}} exp( \frac{\epsilon q(D,r') }{2 \triangle})}
 \right) \\
 & \leq exp(\frac{\epsilon}{2}) \cdot exp(\frac{\epsilon}{2})
  \\
@@ -264,13 +264,13 @@ The exponential mechanism preserves $(\epsilon, 0)-$differential privacy.
 \end{theorem}
 
 
-The reason why the exponential mechanism can offer strong quality guarantees is that it discount the probability of outcomes exponentially fast as their quality scores drop. Let $OPT_q(x) = \max_{r \in \mathcal{R}} q(x, r)$ denote the maximum quality score in scope $\mathcal{R}$ with regard to database $x$. The exponential mechanism substantially biases the distribution towards high scoring outputs and brings the expected score close to the optimum $OPT_q(x)$.
+The reason why the exponential mechanism can offer strong quality guarantees is that it discounts the probability of outcomes exponentially fast as their quality scores drop. Let $OPT_q(D) = \max_{r \in \mathcal{R}} q(D, r)$ denote the maximum quality score in scope $\mathcal{R}$ with regard to database $D$. The exponential mechanism substantially biases the distribution towards high scoring outputs and brings the expected score close to the optimum $OPT_q(D)$.
 
 \begin{theorem}
-A database $x$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ are given. Let $\mathcal{R}_{OPT} =\{r \in \mathcal{R}: q(x, r) = OPT_q(x) \}$ denote the set of elements in $\mathcal{R}$ that assume the maximum score. Then:
+A database $D$ and a quality function $q$ with respect to $x$ and query range $\mathcal{R}$ are given. Let $\mathcal{R}_{OPT} =\{r \in \mathcal{R}: q(D, r) = OPT_q(D) \}$ denote the set of elements in $\mathcal{R}$ that assume the maximum score. Then:
 \begin{equation}
-Pr \left[q(M_E(x, q, \mathcal{R}))
-\leq OPT_q(x) - \frac{2\triangle}{\epsilon}
+Pr \left[q(M_E(D, q, \mathcal{R}))
+\leq OPT_q(D) - \frac{2\triangle}{\epsilon}
 \left(
 ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
 \right) \right]
@@ -278,18 +278,18 @@ ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
 \end{equation}
 \textit{Proof. }
 \begin{align}  \label{eq:proof2}
-Pr[q(M_E(x, q, \mathcal{R})) \leq c]
+Pr[q(M_E(D, q, \mathcal{R})) \leq c]
 & \leq \frac{
 |\mathcal{R}| exp(\epsilon c / 2 \triangle)
 }{
-|\mathcal{R}_{OPT}| exp(\epsilon OPT_q(x) / 2 \triangle)
+|\mathcal{R}_{OPT}| exp(\epsilon OPT_q(D) / 2 \triangle)
 } \\
 &= \frac{|\mathcal{R}| }{ | \mathcal{R}_{OPT} | }
 exp(
-\frac{\epsilon ( c - OPT_q(x)  ) }{2 \triangle}
+\frac{\epsilon ( c - OPT_q(D)  ) }{2 \triangle}
 )
 \end{align}
-Substitute $c = OPT_q(x) - \frac{2\triangle}{\epsilon}
+Substitute $c = OPT_q(D) - \frac{2\triangle}{\epsilon}
 \left(
 ln \left( \frac{|\mathcal{R}|}{|\mathcal{R}_{OPT}|} \right) + t
 \right)
@@ -297,24 +297,24 @@ $ into above inequation \ref{eq:proof2}, and then Q.E.D.
 \end{theorem}
 Since we always have $|\mathcal{R}_{OPT}| \geq 1$, the above theorem can be simplified into the following corollary:
 \begin{corollary}
-Given a database $x$ and a quality function $q$ with respect to the $x$ and query range $\mathcal{R}$, we have:
+Given a database $D$ and a quality function $q$ with respect to the $D$ and query range $\mathcal{R}$, we have:
 \begin{equation}
-Pr[q(M_E(x, q, \mathcal{R}))  \geq
-OPT_q(x) - \frac{2 \triangle}{\epsilon} (ln(| \mathcal{R}|) + t)]
+Pr[q(M_E(D, q, \mathcal{R}))  \geq
+OPT_q(D) - \frac{2 \triangle}{\epsilon} (ln(| \mathcal{R}|) + t)]
 \geq 1-e^{-t}.
 \end{equation}
 \end{corollary}
-In other words, the exponential mechanism is a differential private mechanism that outputs an element from the range that has quality score that is nearly as high as possible---excepting an additive term which is linear in the sensitivity of the quality score and logarithmic in the cardinality of the query range.
+In other words, the exponential mechanism is a differential private mechanism that outputs an element from the range that has quality score which is nearly as high as possible---excepting an additive term which is linear in the sensitivity of the quality score and logarithmic in the cardinality of the query range.
 
 
 \subsection{BLR Mechanism}
-BLR mechanism, proposed by Blum, Ligett and Roth \cite{blum2013learning}, is novel mechanism that breaks the limitation of the number of queries to non-interactive databases. Let $D = \{x_1, x_2, ..., x_n\} \in \mathcal{X}^n$ denote an n-row database and $Q=\{q_1, q_2, ..., q_k\}$ denote a set of queries and frequently write $k=|Q|$. The BLR mechanism preserves accuracy and privacy even when $k \gg n$. The lacpace mechanism requires that each query should be accurate and private independently and independent noise is added to each dimension of the output vector. This strategy reveals information increasingly in linearity to the number of queries $k$. To overcome the rising loss caused by excessive queries, BLR resorts to correlate the noise by projecting the answers to queries in a space of lower dimension. The "projection" is achieved by generating a \textit{synthetic database} that approximately preserves the answers to all queries. Let $\mathcal{X}$ be a universe of data items and $\mathcal{C}$ be a "concept" class consisting of efficiently computable functions $c: \mathcal{X} \rightarrow \{ 0, 1\}$. As analyzed by Blum \etal \cite{blum2013learning}, the synthetic database has the good property of maintaining approximately correct fractional counts for all concepts in $\mathcal{C}$. In other words, for every concept $c \in \mathcal{C}$, the fraction of elements in synthetic database $\hat{D} \in \mathcal{X}^m$ that satisfy $c$ is approximately the same as the fraction of elements in original database $D \in \mathcal{X}^n$ that satisfy $c$. It substantially ensures the accuracy of outputs to queries. And after separating the original database from queries, anyone can run any statistic on it as many times as possible.
+BLR mechanism, proposed by Blum, Ligett and Roth \cite{blum2013learning}, is an novel mechanism that breaks the limitation of the number of queries to non-interactive databases. Let $D = \{x_1, x_2, ..., x_n\} \in \mathcal{X}^n$ denote an n-row database and $Q=\{f_1, f_2, ..., f_k\}$ denote a set of queries and frequently write $k=|Q|$. The BLR mechanism preserves accuracy and privacy even when $k \gg n$. The lacpace mechanism requires that each query should be accurate and private independently and independent noise is added to each dimension of the output vector. This strategy reveals information increasingly in linearity to the number of queries $k$. To overcome the rising loss caused by excessive queries, BLR resorts to correlate the noise by projecting the answers to queries in a space of lower dimension. The "projection" is achieved by generating a \textit{synthetic database} that approximately preserves the answers to all queries. Let $\mathcal{X}$ be a universe of data items and $\mathcal{C}$ be a "concept" class consisting of efficiently computable functions $c: \mathcal{X} \rightarrow \{ 0, 1\}$. As analyzed by Blum \etal \cite{blum2013learning}, the synthetic database has the good property of maintaining approximately correct fractional counts for all concepts in $\mathcal{C}$. In other words, for every concept $c \in \mathcal{C}$, the fraction of elements in synthetic database $\hat{D} \in \mathcal{X}^m$ that satisfy $c$ is approximately the same as the fraction of elements in original database $D \in \mathcal{X}^n$ that satisfy $c$. It substantially ensures the accuracy of outputs to queries. And after separating the original database from queries, anyone can run any statistic on it as many times as possible.
 
 We start with the observation that for every database $D$ and query set $Q$, there exists a synthetic database with a small number of rows that preserves the answers to every query in Q.
 
 \begin{theorem}
 \textit{
-For every $D \in \mathcal{X}^n$ and every set of counting queries $Q$, there exists a synthetic database $\hat{D} \in \mathcal{X}^m$, for $m \in \frac{8logk}{\alpha^2}$, such that
+For every $D \in \mathcal{X}^n$ and every set of counting queries $Q$, there exists a synthetic database $\hat{D} \in \mathcal{X}^m$, for $m = \frac{8logk}{\alpha^2}$, such that
 $$ max_{i \in [k]} | q_i(D) - q_i(\hat{D}) | \leq \alpha. $$
 Proof. Consider a database $\hat{D}\in \mathcal{X}^m$ formed by taking $m < n$ random samples from $D \in \mathcal{X}^n$. Then by a union bound and a Chernoff bound
 \begin{align}
@@ -330,12 +330,11 @@ It suggests that there must exists some $\hat{D} \in \mathcal{X}^m$ that preserv
 
 The above theorem has kindled interest in synthetic databases \cite{blum2013learning, dwork2009complexity}. But how to construct the differentially private synthetic databases efficiently? The BLR mechanism \cite{blum2013learning} presents a classical paradigm that instantiates the exponential mechanism to build up the synthetic database:
 \begin{itemize}
-\item Let $\mathcal{R} = \mathcal{X}^m$ for $m = \frac{32logk}{\alpha^2},$
+\item Let $\mathcal{R} = \mathcal{X}^m$ for $m = \frac{32logk}{\alpha^2}$.
 \item Let the quality function $q(D, \hat{D}) = -max_{f\in Q} | f(D) - f(\hat{D}) |$ for every $D \in \mathcal{X}^n$ and $\hat{D} \in \mathcal{X}^m$. Note that we make the quality function inversely related to the error so that better accuracy implies higher score.
 \item The sensitivity of the quality function $\triangle = 1/n$, because it is simply the maximum error over a set of counting queries, and a counting query  has global sensitivity $1/n$.
 \item Sample and output $\hat{D} \in \mathcal{X}^m$ with the exponential mechanism $M_E(D, q, \mathcal{R})$.
 \end{itemize}
-
 However, the BLR mechanism is inefficient. In general, the running time will be at least polynomial in $|\mathcal{X}|$. So it is a significant open question to understand whether or not we can achieve accuracy and differential privacy in time polylog $|\mathcal{X}|$ for various classes of queries.
 
 
@@ -363,7 +362,7 @@ The above mentioned solutions pose too much limitations on the data types. In or
 %------------------------------------------------
 
 \section*{Conclusion}
-We have surveyed a number of approached in the context of different privacy triggered by rising needs of data publishment and privacy protection. Targeted at various requirements and situations, a large literature has explored abundant differentially private mechanisms \cite{mcsherry2007mechanism}, three of which has been introduced in this writing. A number of sub-fields of differential privacy like local differential privacy have also been investigated to apply it into more specific applications. Although we may not notice, differential privacy is supporting the world full of information and knowledge in its way.
+We have surveyed a number of approaches in the context of different privacy which is triggered by the rising aspiration for data publishment and privacy protection. Targeted at various requirements and situations, a large literature has explored abundant differentially private mechanisms \cite{mcsherry2007mechanism}, three of which has been introduced in this writing. A number of sub-fields of differential privacy like local differential privacy have also been investigated to apply it into more specific applications. Although we may not notice, differential privacy is supporting this world full of information and knowledge in its way.
 
 
 

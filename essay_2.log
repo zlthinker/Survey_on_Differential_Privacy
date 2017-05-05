@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  4 MAY 2017 16:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  5 MAY 2017 11:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -351,13 +351,13 @@ LaTeX Font Info:    Font shape `OMS/ppl/m/it' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
  [11] [12]) [13] (./essay_2.aux) ) 
 Here is how much of TeX's memory you used:
- 4464 strings out of 493089
- 65612 string characters out of 6134842
+ 4476 strings out of 493089
+ 65714 string characters out of 6134842
  156039 words of memory out of 5000000
  7589 multiletter control sequences out of 15000+600000
- 62049 words of font info for 267 fonts, out of 8000000 for 9000
+ 62655 words of font info for 275 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,12n,35p,1896b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,12n,35p,1899b,228s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc
 /dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
@@ -369,7 +369,7 @@ plmbb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/mathpazo/fplmr
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/
 local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/t
 exlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on essay_2.pdf (13 pages, 150243 bytes).
+Output written on essay_2.pdf (13 pages, 150095 bytes).
 PDF statistics:
  88 PDF objects out of 1000 (max. 8388607)
  62 compressed objects within 1 object stream
