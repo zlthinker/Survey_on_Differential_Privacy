@@ -92,7 +92,7 @@ A Survery} % Subtitle
 %\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
 
 \begin{abstract}
-We review the definition of differential privacy and revisit a number of approaches proposed recently that make significant contributions to the advance of differential privacy.
+Differential privacy imposes a strong privacy guarantee on the database that the romoval or addition of a single record does not significantly affect the outcome of any analysis made on the database. In this survey, we review the definition of differential privacy and revisit a number of approaches proposed recently that make significant contributions to the advance of differential privacy.
 \end{abstract}
 
 %\hspace*{3,6mm}\textit{Keywords:} differential privacy % Keywords
@@ -117,10 +117,10 @@ In the rest of the survey, we provide the definition of differential privacy and
 
 \section{Differentail Privacy}
 
-Over the past ten years, differentail privacy\cite{dwork2008differential, dwork2014algorithmic} has emerged to become one of the most powerful approaches to ensure data pricacy. Roughly speaking, differential privacy ensures that the removal or insertion of a single record does not significantly affect the outcome of any analysis conducted on the database, thus making it possible to prevent private information from exposing to attackers. It follows a rigorous mathematical deduction to prove it can reduce the risk of privacy breach while remaining the utility of the data. At the beginning of this section, we will illuminate the concept by leveraging a simple example. Then, we will give the mathematical definition of differential privay and introduce two privacy mechanisms to achieve it.
+Over the past ten years, differentail privacy\cite{dwork2008differential, dwork2014algorithmic} has emerged to become one of the most powerful approaches to ensure data pricacy. Roughly speaking, differential privacy ensures that the removal or insertion of a single record does not significantly affect the outcome of any analysis conducted on the database, thus making it possible to prevent private information from exposing to attackers. It follows a rigorous mathematical deduction to prove it can reduce the risk of privacy breach while remaining the utility of the data. At the beginning of this section, we will illuminate the concept by leveraging a simple example. Then, we will give the mathematical definition of differential privay and introduce three privacy mechanisms to achieve it.
 
 \subsection{A Simple Example}
-Suppose you have access to a database that allows you to compute the total income of all resident in certain area. You know one of your friends, Mr. White is going to move to another area, so simply computing the total income of all resident before and after Mr. White's move would allow you to guess his real income. As shown in table \ref{table:1}, the total income of all residents before Mr.White's move is 50 million, while the total income of all residents after Mr.White's move is 49 million. One can compute the real income of Mr.White is 1 millon. So from this example we can see even though we are not allowed to retrieve the information of a particular person, we are still able to get the private informtion through certain opertions. So what could one do to stop this? In the next section, we wil see how differential privacy can help resolve this problem.
+Suppose you have access to a database that allows you to compute the total income of all resident in a certain area. You know one of your friends, Mr. White is going to move to another area, so simply computing the total income of all resident before and after Mr. White's move would allow you to guess his real income. As shown in table \ref{table:1}, the total income of all residents before Mr.White's move is 50 million, while the total income of all residents after Mr.White's move is 49 million. One can compute that the real income of Mr.White is 1 millon. So from this example we can see even though we are not allowed to retrieve the information of a particular person, we are still able to get the private informtion through certain opertions. So what could one do to stop this? In the next section, we wil see how differential privacy resolve this problem.
 
 
 \begin{table}
@@ -171,7 +171,7 @@ Suppose you have access to a database that allows you to compute the total incom
 Firstly, let us define some notations.
 \theoremstyle{definition}
 \begin{definition}{}
- $D$ and $D^\prime$ are databases, but they must differs on at most one row.
+ $D$ and $D^\prime$ are databases, but they must differ on at most one row.
 \end{definition}
 The reason why $D$ and $D^\prime$ is required to differ on one row is to simulate whether a particular record is in or not in the database.
 \begin{definition}{}
@@ -181,7 +181,7 @@ Refer to the previous example, $f(D)$ is the total income of all residents in th
 \begin{definition}{}
 	$M(D)$ is the privacy mechanism, which is a randomized function that takes the database $D$ as inpiut, and release privatized information with respect to $f(D)$.
 \end{definition}
-Designing privacy mechanism is a topic on its own\cite{mcsherry2007mechanism}. In this survery, we only consider Laplace Mechanism and Exponential Mechanism. Refer to the previous example, $M(D)$ is the privated total income obtained by adding random noise on the total income.
+Designing privacy mechanism is a topic on its own\cite{mcsherry2007mechanism}. In this survery, we only consider Laplace Mechanism, Exponential Mechanism, and BLR Mechanism. Refer to the previous example, $M(D)$ is the privated total income obtained by adding random noise on the total income.
 \begin{definition}{$\epsilon$ - differential privacy}
 	A privacy mechanism $M$ gives $\epsilon$ - differential privacy if for all data sets $D$ and $D^\prime$ differing on at most one row, and all $C\in Range(M)$,
 	\[  \frac{Pr[M(D) = C]}{Pr[M(D^\prime) = C]}< e^\epsilon \]
@@ -193,9 +193,9 @@ In this section, we will introduction one of the most popular privacy mechanisms
 \begin{definition}{Sensitivity of a Function}
 For $f: D\rightarrow R^n$, the sensitivity of $f$ is
 	\[  \bigtriangleup f = max_{D, D\prime} ||f(D) - f(D\prime)||_n \]
-	for all $D, D\prime$ differs on at most one row.
+	for all $D, D\prime$ differ on at most one row.
 \end{definition}
-Intutively, $\bigtriangleup f$ captures how much one person's data can affect the ouput. Taking the counting query as an example, $\bigtriangleup f = 1$ because adding or deleting a row of the database will only affect the number of records by 1.
+Intutively, $\bigtriangleup f$ captures how much one person's data can affect the ouput. Taking the counting query as an example, $\bigtriangleup f = 1$ because adding or deleting a row in the database will only affect the number of records by 1.
 
 For simplicity, we only consider the case when $n=1$. Laplace Mechanism $M(D)$ privatizes the result by adding a 0-centered symmetric random noise, which is drawn from Laplace Distribution\cite{simon1774memoire} with parameter $\bigtriangleup f / \epsilon$,  on the true answer $f(D)$. So the probability density function of the random noise $x$ is
    \[ Pr[x] = \frac{\epsilon}{2\bigtriangleup f}e^{-\frac{|x|\epsilon}{\bigtriangleup f}}  \]
@@ -351,7 +351,7 @@ The goal of the curator is to give the estimated percentage of "yes" given the n
 \[ c^\prime = c \times c_{e}, where \ c_{e} = \frac{1}{1-2p}\]
 The limitation of RR is that it can only be applied to the problem with binary answer.
 \subsection{RAPPOR}
-RAPPOR\cite{erlingsson2014rappor,fanti2016building} extends RR\cite{erlingsson2014rappor} to more complex data types. Suppose there are $n$ users and $d$ items, each user can own exactly one item. To be more specific, let us define $u_i$, where $i=1 \ to \ n$, as the $i_{th}$ user. $v_i$, where $i=1 \ to \ n$, is a vector with length $d$ of $u_i$. All the coordinates of $v_i$ are 0 except the $j_{th}$ coordinate, which is 1, if $u_i$ owns item $j$. The goal of the corator is the same as in RR, which is to compute the frequency of each item. User $u_i$ applies RR independently on each coordinate of $v_i$ with a biased coin with probability $p$ (the sensitivity of any query function $f$ is 2 because any vector contains a single coordinate of 1, hence the maximum difference between $f(D)$ and $f(D^\prime)$ is 2):
+RAPPOR\cite{erlingsson2014rappor,fanti2016building} extends RR\cite{erlingsson2014rappor} to more complex data types. Suppose there are $n$ users and $d$ items, each user can own exactly one item. To be more specific, let us define $u_i$, where $i=1 \ to \ n$, as the $i_{th}$ user. $v_i$, where $i=1 \ to \ n$, is a vector with length $d$ of $u_i$. All the coordinates of $v_i$ are 0 except the $j_{th}$ coordinate, which is 1, if $u_i$ owns item $j$. The goal of the curator is the same as in RR, which is to compute the frequency of each item. User $u_i$ applies RR independently on each coordinate of $v_i$ with a biased coin with probability $p$ (the sensitivity of any query function $f$ is 2 because any vector contains a single coordinate of 1, hence the maximum difference between $f(D)$ and $f(D^\prime)$ is 2):
 \[ p = \frac{e^{\frac{\epsilon}{2}}}{1+e^{\frac{\epsilon}{2}}} \]
 The limitation of RAPPOR is that it can cause huge communication overhead because each user has to send a vector with lengh $d$, which can be extremly large in some cases (e.g. the number of email accounts of all users).
 
